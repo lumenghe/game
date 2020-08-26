@@ -15,3 +15,6 @@ import ai
 url_prefix = 'https://www.xxxxx.com/checkers/'
 
 ###############################################################################
+
+class InvalidMoveException(Exception):
+    pass
