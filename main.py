@@ -25,3 +25,11 @@ class GameOver(Exception):
         self.winner = winner
 
 ###############################################################################
+
+if sys.version_info >= (3,0):
+    def raw_input(msg):
+        return input(msg)
+else:
+    pass
+
+###############################################################################
