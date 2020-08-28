@@ -18,3 +18,10 @@ url_prefix = 'https://www.xxxxx.com/checkers/'
 
 class InvalidMoveException(Exception):
     pass
+
+class GameOver(Exception):
+    def __init__(self, winner):
+        super(GameOver, self).__init__()
+        self.winner = winner
+
+###############################################################################
