@@ -62,3 +62,18 @@ def send_request(url, method, data = {}):
             raise Exception('Unknown error')
 
 ###############################################################################
+
+def print_board(board):
+    b = "_" * (2 * len(board) + 3) + "\n"
+    for i, row in enumerate(board):
+        b += "| "
+        for j, c in enumerate(row):
+            if (i + j) % 2 == 0:
+                b += "  "
+            else:
+                b += c + " "
+        b += "|\n"
+    b += "-" * (2 * len(board) + 3)
+    print(b + "\n")
+
+###############################################################################
