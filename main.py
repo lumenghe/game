@@ -108,3 +108,20 @@ def new_move(game, move):
     return response['board']
 
 ###############################################################################
+
+def read_config():
+    root = os.path.dirname(sys.argv[0])
+    config_path = os.path.join(root, 'config.json')
+    if os.path.isfile(config_path):
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+    else:
+        name = raw_input('What is your name ? ')
+        config = {
+            'name': name
+        }
+        with open(config_path, 'w') as f:
+            json.dump(config, f)
+    return config
+
+###############################################################################
