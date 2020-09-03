@@ -84,3 +84,27 @@ def new_game(config, size, color):
     return send_request(url_prefix + 'games', 'post', data)
 
 ###############################################################################
+
+def new_move(game, move):
+    # Check the move
+    assert(len(move) > 0)
+    mm = []
+    for m in move:
+        assert(len(m) == 2)
+        mm.append(list(m))
+
+    print_move("Your move:", mm)
+    response = send_request(url_prefix + 'games/%d' % game['id'], 'post', {'move': mm})
+
+    if 'board_after_candidate_move' in response:
+        print_board(response['board_after_candidate_move'])
+    if 'move' in response:
+        print_move("The other side made this move:", response['move'])
+    if response['over']:
+        if 'board' in response:
+            print_board(response['board'])
+        raise GameOver(response['winner'])
+
+    return response['board']
+
+###############################################################################
