@@ -17,3 +17,21 @@ def get_disc_type(origin_type, x, size=8):
     elif origin_type == 1 and x == size-1:
         disc_type = 2
     return disc_type
+
+def board_to_numpy(board):
+    """ Convert a list of string nboard to a numpy 2d array """
+    if isinstance(board, np.ndarray):
+        return board
+    size = len(board)
+    nboard = np.zeros((size, size), dtype=np.int64)
+    for i, row in enumerate(board):
+        for j, square in enumerate(row):
+            if square == 'b':
+                nboard[i, j] = 1
+            elif square == 'B':
+                nboard[i, j] = 2
+            elif square == 'w':
+                nboard[i, j] = -1
+            elif square == 'W':
+                nboard[i, j] = -2
+    return nboard
