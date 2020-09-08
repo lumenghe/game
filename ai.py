@@ -48,3 +48,15 @@ def new_board():
         'w_w_w_w_'
         ]
     return board_to_numpy(board)
+
+def nboard_to_str(nboard):
+    """ Pretty board repr """
+    size = nboard.shape[0]
+    num_to_letter = {1: "b", 2: "B", -1: "w", -2: "W"}
+    sep = "   " + "+---" * size + "+"
+    output_string = "     " + "   ".join(str(i) for i in range(size))
+    output_string += "\n" + sep
+    for i, row in enumerate(nboard):
+        line = " " + str(i) + " | " + " | ".join(num_to_letter.get(num, " ") for num in row) + " |"
+        output_string += "\n" + line + "\n" + sep
+    return output_string
