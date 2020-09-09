@@ -60,3 +60,7 @@ def nboard_to_str(nboard):
         line = " " + str(i) + " | " + " | ".join(num_to_letter.get(num, " ") for num in row) + " |"
         output_string += "\n" + line + "\n" + sep
     return output_string
+
+def print_nboard(nboard):
+    """ Pretty print board """
+    print(nboard_to_str(nboard))
