@@ -8,8 +8,6 @@ import ai
 
 url_prefix = 'https://www.xxxxx.com/checkers/'
 
-###############################################################################
-
 class InvalidMoveException(Exception):
     pass
 
@@ -18,15 +16,11 @@ class GameOver(Exception):
         super(GameOver, self).__init__()
         self.winner = winner
 
-###############################################################################
-
 if sys.version_info >= (3,0):
     def raw_input(msg):
         return input(msg)
 else:
     pass
-
-###############################################################################
 
 def send_request(url, method, data = {}):
     if method == 'get':
@@ -55,8 +49,6 @@ def send_request(url, method, data = {}):
         else:
             raise Exception('Unknown error')
 
-###############################################################################
-
 def print_board(board):
     b = "_" * (2 * len(board) + 3) + "\n"
     for i, row in enumerate(board):
@@ -70,20 +62,14 @@ def print_board(board):
     b += "-" * (2 * len(board) + 3)
     print(b + "\n")
 
-###############################################################################
-
 def print_move(msg, move):
     print(msg + " " + ", ".join([str(tuple(m)) for m in move]))
-
-###############################################################################
 
 def new_game(config, size, color):
     data = copy.deepcopy(config)
     data['size'] = size
     data['color'] = color
     return send_request(url_prefix + 'games', 'post', data)
-
-###############################################################################
 
 def new_move(game, move):
     # Check the move
@@ -107,8 +93,6 @@ def new_move(game, move):
 
     return response['board']
 
-###############################################################################
-
 def read_config():
     root = os.path.dirname(sys.argv[0])
     config_path = os.path.join(root, 'config.json')
@@ -123,8 +107,6 @@ def read_config():
         with open(config_path, 'w') as f:
             json.dump(config, f)
     return config
-
-###############################################################################
 
 def play_game(config, size, candidate_color):
     game = new_game(config, size, candidate_color)
@@ -148,3 +130,10 @@ def play_game(config, size, candidate_color):
             return True
         except InvalidMoveException:
             return False
+
+if __name__ == "__main__":
+    config = read_config()
+    if not play_game(config, 8, 'b'):
+        print("You made an invalid move. Please check your code.")
+    if not play_game(config, 8, 'w'):
+        print("You made an invalid move. Please check your code.")
