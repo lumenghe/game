@@ -148,12 +148,3 @@ def play_game(config, size, candidate_color):
             return True
         except InvalidMoveException:
             return False
-
-###############################################################################
-
-if __name__ == "__main__":
-    config = read_config()
-    if not play_game(config, 8, 'b'):
-        print("You made an invalid move. Please check your code.")
-    if not play_game(config, 8, 'w'):
-        print("You made an invalid move. Please check your code.")
