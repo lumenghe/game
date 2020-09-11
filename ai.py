@@ -64,3 +64,13 @@ def nboard_to_str(nboard):
 def print_nboard(nboard):
     """ Pretty print board """
     print(nboard_to_str(nboard))
+
+def check_winner_or_blocked(nboard):
+    """ Check if a player won or their opponent is blocked """
+    win = check_winner(nboard)
+    if win == 0:
+        if not allowed_moves(nboard, "b"):
+            win = -1
+        elif not allowed_moves(nboard, "w"):
+            win = 1
+    return win
