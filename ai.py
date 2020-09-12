@@ -74,3 +74,20 @@ def check_winner_or_blocked(nboard):
         elif not allowed_moves(nboard, "w"):
             win = 1
     return win
+
+def check_winner(nboard):
+    """ Check if a play won """
+    size = len(nboard)
+    alive_b = False
+    alive_w = False
+    for i in range(size):
+        for j in range(size):
+            if nboard[i][j] > 0:
+                alive_b = True
+            elif nboard[i][j] < 0:
+                alive_w = True
+    if alive_b and not alive_w:
+        return 1
+    if not alive_b and alive_w:
+        return -1
+    return 0
