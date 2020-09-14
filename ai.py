@@ -91,3 +91,12 @@ def check_winner(nboard):
     if not alive_b and alive_w:
         return -1
     return 0
+
+def next_one_square(disc_type, ox, oy):
+    """ return all one step """
+    if disc_type == 1:
+        return [(cx, cy) for (cx, cy) in [(ox+1, oy-1), (ox+1, oy+1)] if inboard(cx, cy)]
+    elif disc_type == -1:
+        return [(cx, cy) for (cx, cy) in [(ox-1, oy-1), (ox-1, oy+1)] if inboard(cx, cy)]
+    else:
+        return [(cx, cy) for (cx, cy) in [(ox-1, oy-1), (ox-1, oy+1), (ox+1, oy-1), (ox+1, oy+1)] if inboard(cx, cy)]
