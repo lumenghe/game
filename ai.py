@@ -100,3 +100,36 @@ def next_one_square(disc_type, ox, oy):
         return [(cx, cy) for (cx, cy) in [(ox-1, oy-1), (ox-1, oy+1)] if inboard(cx, cy)]
     else:
         return [(cx, cy) for (cx, cy) in [(ox-1, oy-1), (ox-1, oy+1), (ox+1, oy-1), (ox+1, oy+1)] if inboard(cx, cy)]
+
+def depth_first_search(nboard, disc_type, ox, oy):
+    """
+    depth_first_search in graph
+    """
+    ret = {'capturing': [], 'non_capturing': [], 'capturing_list':[], 'end':True, 'type': disc_type}
+    stack = [((ox, oy), ret)]
+    while stack:
+        ((ox, oy), ret) = stack.pop()
+        if ret['capturing']:
+            ret['end'] = True
+            for (cx, cy) in next_one_square(ret['type'], ox, oy):
+                if (cx, cy) not in ret['capturing_list'] and nboard[cx][cy] != 0 and np.sign(nboard[cx][cy]) != np.sign(ret['type']):
+                    if inboard(2*cx-ox, 2*cy-oy) and (nboard[2*cx-ox][2*cy-oy] == 0 or (2*cx-ox, 2*cy-oy) == ret['capturing'][0]):
+                        ret['end'] = False
+                        stack.append(((2*cx-ox, 2*cy-oy), {'capturing_list': ret['capturing_list']+[(cx, cy)], 'non_capturing':ret['non_capturing'],\
+                            'capturing': ret['capturing']+ [(2*cx-ox, 2*cy-oy)], 'end':False, 'type': get_disc_type(ret['type'], 2*cx-ox)}))
+
+            if ret['end']:
+                yield ret
+
+        else:
+            for (cx, cy) in next_one_square(ret['type'], ox, oy):
+                if nboard[cx][cy] == 0:
+                    yield {'capturing': [], 'non_capturing': [(ox, oy), (cx, cy)], 'capturing_list':[], 'end':True, 'type':get_disc_type(disc_type, cx, cy)}
+                elif np.sign(nboard[cx][cy]) == np.sign(ret['type']):
+                    yield {'capturing': [], 'non_capturing': [], 'capturing_list':[], 'end':True, 'type':disc_type}
+                else:
+                    if inboard(2*cx-ox, 2*cy-oy) and nboard[2*cx-ox][2*cy-oy] == 0:
+                        stack.append(((2*cx-ox, 2*cy-oy), {'capturing_list':[(cx, cy)], 'capturing':[(ox, oy), (2*cx-ox, 2*cy-oy)], \
+                            'non_capturing':[], 'end':False, 'type':get_disc_type(disc_type, 2*cx-ox)}))
+                    else:
+                        yield {'capturing': [], 'non_capturing': [], 'capturing_list':[], 'end':True, 'type':disc_type}
