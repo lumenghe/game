@@ -133,3 +133,13 @@ def depth_first_search(nboard, disc_type, ox, oy):
                             'non_capturing':[], 'end':False, 'type':get_disc_type(disc_type, 2*cx-ox)}))
                     else:
                         yield {'capturing': [], 'non_capturing': [], 'capturing_list':[], 'end':True, 'type':disc_type}
+
+def _apply_non_capture(nboard, i, j, next_i, next_j):
+    """ Apply a non-capturing step """
+    size = len(nboard)
+    nboard[next_i][next_j] = nboard[i][j]
+    if nboard[i][j] > 0 and next_i == size-1:
+        nboard[next_i][next_j] = 2
+    elif nboard[i][j] < 0 and next_i == 0:
+        nboard[next_i][next_j] = -2 # Promotion to King if needed
+    nboard[i][j] = 0
