@@ -143,3 +143,14 @@ def _apply_non_capture(nboard, i, j, next_i, next_j):
     elif nboard[i][j] < 0 and next_i == 0:
         nboard[next_i][next_j] = -2 # Promotion to King if needed
     nboard[i][j] = 0
+
+def _apply_capture(nboard, i, j, next_i, next_j):
+    """ Apply a capturing step """
+    size = len(nboard)
+    nboard[next_i][next_j] = nboard[i][j]
+    if nboard[i][j] > 0 and next_i == size-1:
+        nboard[next_i][next_j] = 2
+    elif nboard[i][j] < 0 and next_i == 0:
+        nboard[next_i][next_j] = -2 # Promotion to King if needed
+    nboard[i][j] = 0
+    nboard[(i + next_i) // 2][(j + next_j) // 2] = 0
