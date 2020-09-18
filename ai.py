@@ -154,3 +154,13 @@ def _apply_capture(nboard, i, j, next_i, next_j):
         nboard[next_i][next_j] = -2 # Promotion to King if needed
     nboard[i][j] = 0
     nboard[(i + next_i) // 2][(j + next_j) // 2] = 0
+
+def apply_move(nboard, move):
+    """ Modify the nboard when playing a move """
+    retboard = nboard.copy()
+    for (i, j), (next_i, next_j) in zip(move[:-1], move[1:]):
+        if abs(i - next_i) == 1: # sufficient to say it is a non capturing step
+            _apply_non_capture(retboard, i, j, next_i, next_j)
+        else:
+            _apply_capture(retboard, i, j, next_i, next_j)
+    return retboard
