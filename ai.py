@@ -164,3 +164,13 @@ def apply_move(nboard, move):
         else:
             _apply_capture(retboard, i, j, next_i, next_j)
     return retboard
+
+def simple_with_end_eval(nboard):
+    """ +1 for black disk +2 for black king
+        -1 for white disk -2 for white king
+        + 24 for black winning
+        - 24 for white winning """
+    cwob = check_winner_or_blocked(nboard)
+    if cwob:
+        return cwob
+    return np.sum(nboard) / 24.0
