@@ -242,3 +242,57 @@ def allowed_moves(board, color):
                     if ret['non_capturing']:
                         allowed_non_capturing.append(ret['non_capturing'])
     return allowed_capturing if allowed_capturing else allowed_non_capturing
+
+def alphabeta_play(board, color, eval_fn, max_depth):
+    """ alpha beta pruning """
+    def max_value(board, color, alpha, beta, eval_fn, depth):
+        maxvalue = -np.inf
+        maxmove = None
+        if depth == 0:
+            return None, eval_fn(board)
+        moves = allowed_moves(board, color)
+        if not moves:
+            return None, eval_fn(board)
+        for move in moves:
+            newboard = apply_move(board, move)
+            _, tempvalue = min_value(newboard, 'w', alpha, beta, eval_fn, depth-1)
+            if tempvalue > maxvalue:
+                maxmove, maxvalue = move, tempvalue
+            elif tempvalue == maxvalue and random.choice([True, False]):
+                maxmove = move
+
+            if maxvalue >= beta:
+                break
+            alpha = max(alpha, maxvalue)
+        if maxmove is None:
+            maxvalue = eval_fn(board)
+        return maxmove, maxvalue
+
+    def min_value(board, color, alpha, beta, eval_fn, depth):
+        minvalue = np.inf
+        minmove = None
+        if depth == 0:
+            return None, eval_fn(board)
+        moves = allowed_moves(board, color)
+        if not moves:
+            return None, eval_fn(board)
+        for move in moves:
+            newboard = apply_move(board, move)
+            _, tempvalue = max_value(newboard, 'b', alpha, beta, eval_fn, depth-1)
+            if tempvalue < minvalue:
+                minmove, minvalue = move, tempvalue
+            elif tempvalue == minvalue and random.choice([True, False]):
+                minmove = move
+
+            if minvalue <= alpha:
+                break
+            beta = min(beta, minvalue)
+        if minmove is None:
+            minvalue = eval_fn(board)
+        return minmove, minvalue
+
+    if color == 'b':
+        best_move, best_value = max_value(board, 'b', -np.inf, np.inf, eval_fn, max_depth)
+    elif color == 'w':
+        best_move, best_value = min_value(board, 'w', -np.inf, np.inf, eval_fn, max_depth)
+    return best_move, best_value
