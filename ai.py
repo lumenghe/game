@@ -296,3 +296,13 @@ def alphabeta_play(board, color, eval_fn, max_depth):
     elif color == 'w':
         best_move, best_value = min_value(board, 'w', -np.inf, np.inf, eval_fn, max_depth)
     return best_move, best_value
+
+def random_play(board, color):
+    """
+        An example of play function based on allowed_moves.
+    """
+    moves = allowed_moves(board, color)
+    # There will always be an allowed move
+    # because otherwise the game is over and
+    # 'play' would not be called by main.py
+    return random.choice(moves)
