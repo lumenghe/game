@@ -306,3 +306,60 @@ def random_play(board, color):
     # because otherwise the game is over and
     # 'play' would not be called by main.py
     return random.choice(moves)
+
+def play(board, color):
+    rl_minimax_depth = 8
+    rl_step = 21
+    rl_model_filepath = './mlp_200_model.h5'
+    value_net = ValueNet(rl_model_filepath, rl_step) # load from previous generation
+    rl_player = RLValueMinimaxPlayer(value_net, rl_minimax_depth)
+    nboard = board if isinstance(board, np.ndarray) else board_to_numpy(board)
+    best_move, _ = rl_player.play(nboard, color)
+    return best_move
+
+def play_game(player_b, player_w, verbose=2, limit_to_draw=1000, random_burn_in=0, trace_min=0):
+    nboard = new_board()
+    player = "b"
+    step = 0
+    win = 0
+    trace = []
+    while True:
+        if verbose >= 2:
+            print("\nSTEP {}, PLAYER {}\n".format(step, player))
+            print_nboard(nboard)
+        win = check_winner(nboard)
+        if win != 0:
+            break
+        if player == "b":
+            if not allowed_moves(nboard, "b"):
+                win = -1
+                break
+            if step < random_burn_in:
+                move = random_play(nboard, "b")
+            else:
+                move, best_value = player_b.play(nboard, "b")
+            player = "w"
+        else:
+            if not allowed_moves(nboard, "w"):
+                win = 1
+                break
+            if step < random_burn_in:
+                move = random_play(nboard, "w")
+            else:
+                move, best_value = player_w.play(nboard, "w")
+            player = "b"
+        nboard = apply_move(nboard, move)
+        if step >= trace_min and step >= random_burn_in:
+            trace.append((nboard.copy(), best_value))
+        step += 1
+        if step >= limit_to_draw:
+            break
+    if verbose >= 1:
+        if win > 0:
+            print("GAME OVER: Blacks won in {} moves".format(step))
+        elif win < 0:
+            print("GAME OVER: Whites won in {} moves".format(step))
+        else:
+            value = simple_with_end_eval(nboard)
+            print("DRAW (limit = {}, value = {})".format(limit_to_draw, value))
+    return win, step, trace
