@@ -367,3 +367,6 @@ def play_game(player_b, player_w, verbose=2, limit_to_draw=1000, random_burn_in=
 class SimpleMinimaxPlayer:
     def __init__(self, max_depth):
         self.max_depth = max_depth
+
+    def play(self, nboard, color):
+        return alphabeta_play(nboard, color, simple_with_end_eval, max_depth=self.max_depth)
