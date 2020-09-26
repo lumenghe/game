@@ -370,3 +370,14 @@ class SimpleMinimaxPlayer:
 
     def play(self, nboard, color):
         return alphabeta_play(nboard, color, simple_with_end_eval, max_depth=self.max_depth)
+
+class RLValueMinimaxPlayer:
+    def __init__(self, value_net, max_depth):
+        self.value_net = value_net
+        self.max_depth = max_depth
+
+    def eval(self, nboard):
+        win = check_winner_or_blocked(nboard)
+        if not win:
+            win = self.value_net.predict(nboard)
+        return win
