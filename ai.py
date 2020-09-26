@@ -363,3 +363,7 @@ def play_game(player_b, player_w, verbose=2, limit_to_draw=1000, random_burn_in=
             value = simple_with_end_eval(nboard)
             print("DRAW (limit = {}, value = {})".format(limit_to_draw, value))
     return win, step, trace
+
+class SimpleMinimaxPlayer:
+    def __init__(self, max_depth):
+        self.max_depth = max_depth
