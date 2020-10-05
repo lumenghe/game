@@ -381,3 +381,6 @@ class RLValueMinimaxPlayer:
         if not win:
             win = self.value_net.predict(nboard)
         return win
+
+    def play(self, nboard, color):
+        return alphabeta_play(nboard, color, self.eval, max_depth=self.max_depth)
