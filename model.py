@@ -44,3 +44,10 @@ class ValueNet():
                              bias_initializer='zeros',
                              activation='tanh'))
         self.model.compile(loss='mean_squared_error', optimizer='adam')
+
+    def save_model(self):
+        """ save model """
+        filepath, ext = os.path.splitext(self.model_filepath)
+        filepath = filepath + "_" + str(self.generation+1) # save for the next generation
+        model_filepath = filepath + ext
+        self.model.save(model_filepath)
