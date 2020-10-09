@@ -59,3 +59,18 @@ class ValueNet():
         filepath = filepath + "_" + str(self.generation) # load for the generation
         model_filepath = filepath + ext
         self.model = load_model(model_filepath)
+
+    def process_board(self, nboard):
+        """ Separate board representation in 4 channels """
+        repr_board = np.zeros((4, self.size, self.size))
+        for i in range(self.size):
+            for j in range(self.size):
+                if nboard[i, j] == 1:
+                    repr_board[0, i, j] = 1
+                elif nboard[i, j] == 2:
+                    repr_board[1, i, j] = 1
+                elif nboard[i, j] == -1:
+                    repr_board[2, i, j] = 1
+                elif nboard[i, j] == -2:
+                    repr_board[3, i, j] = 1
+        return repr_board.flatten()
