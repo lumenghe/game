@@ -51,3 +51,11 @@ class ValueNet():
         filepath = filepath + "_" + str(self.generation+1) # save for the next generation
         model_filepath = filepath + ext
         self.model.save(model_filepath)
+
+    def load_model(self):
+        """ load model """
+        from keras.models import load_model
+        filepath, ext = os.path.splitext(self.model_filepath)
+        filepath = filepath + "_" + str(self.generation) # load for the generation
+        model_filepath = filepath + ext
+        self.model = load_model(model_filepath)

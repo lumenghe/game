@@ -24,3 +24,19 @@ def check_moves(moves, ground_truth):
     if ok:
         print("OK")
     return ok
+
+def test_01_move_black_disc():
+    board = convert_board(8, """
+________
+________
+________
+__b_____
+________
+________
+_____w__
+________
+""")
+    ground_truth = [[(3, 2), (4, 1)],
+                    [(3, 2), (4, 3)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)
