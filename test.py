@@ -40,3 +40,18 @@ ________
                     [(3, 2), (4, 3)]]
     moves = ai.allowed_moves(board, 'b')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_02_move_black_disc_border():
+    board = convert_board(8, """
+________
+________
+________
+b_______
+________
+________
+_____w__
+________
+""")
+    ground_truth = [[(3, 0), (4, 1)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)

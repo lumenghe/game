@@ -74,3 +74,12 @@ class ValueNet():
                 elif nboard[i, j] == -2:
                     repr_board[3, i, j] = 1
         return repr_board.flatten()
+
+    def learn(self, boards, values, epochs, batch_size, save=True):
+        """ model learning """
+        boards = [self.process_board(b) for b in boards]
+        boards = np.stack(boards)
+        values = np.array(values)
+        self.model.fit(boards, values, epochs=epochs, batch_size=batch_size)
+        if save:
+            self.save_model()
