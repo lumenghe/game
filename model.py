@@ -83,3 +83,9 @@ class ValueNet():
         self.model.fit(boards, values, epochs=epochs, batch_size=batch_size)
         if save:
             self.save_model()
+
+    def predict(self, nboard):
+        """ predict """
+        repr_board = self.process_board(nboard)
+        value = self.model.predict(repr_board.reshape(*(1,)+repr_board.shape)).squeeze()
+        return value
