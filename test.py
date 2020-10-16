@@ -55,3 +55,19 @@ ________
     ground_truth = [[(3, 0), (4, 1)]]
     moves = ai.allowed_moves(board, 'b')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_03_move_white_disc():
+    board = convert_board(8, """
+________
+________
+________
+__b_____
+________
+________
+_____w__
+________
+""")
+    ground_truth = [[(6, 5), (5, 6)],
+                    [(6, 5), (5, 4)]]
+    moves = ai.allowed_moves(board, 'w')
+    return board, ground_truth, check_moves(moves, ground_truth)
