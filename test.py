@@ -71,3 +71,21 @@ ________
                     [(6, 5), (5, 4)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_04_move_black_king():
+    board = convert_board(8, """
+________
+________
+________
+__B_____
+________
+________
+_____w__
+________
+""")
+    ground_truth = [[(3, 2), (4, 1)],
+                    [(3, 2), (4, 3)],
+                    [(3, 2), (2, 1)],
+                    [(3, 2), (2, 3)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)
