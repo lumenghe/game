@@ -107,3 +107,24 @@ ________
                     [(6, 5), (7, 4)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_06_move_black_initial():
+    board = convert_board(8, """
+_b_b_b_b
+b_b_b_b_
+_b_b_b_b
+________
+________
+w_w_w_w_
+_w_w_w_w
+w_w_w_w_
+""")
+    ground_truth = [[(2, 1), (3, 0)],
+                    [(2, 1), (3, 2)],
+                    [(2, 3), (3, 2)],
+                    [(2, 3), (3, 4)],
+                    [(2, 5), (3, 4)],
+                    [(2, 5), (3, 6)],
+                    [(2, 7), (3, 6)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)
