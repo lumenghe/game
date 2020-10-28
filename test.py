@@ -128,3 +128,24 @@ w_w_w_w_
                     [(2, 7), (3, 6)]]
     moves = ai.allowed_moves(board, 'b')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_07_move_white_initial():
+    board = convert_board(8, """
+_b_b_b_b
+b_b_b_b_
+_b_b_b_b
+________
+________
+w_w_w_w_
+_w_w_w_w
+w_w_w_w_
+""")
+    ground_truth = [[(5, 6), (4, 7)],
+                    [(5, 6), (4, 5)],
+                    [(5, 4), (4, 5)],
+                    [(5, 4), (4, 3)],
+                    [(5, 2), (4, 3)],
+                    [(5, 2), (4, 1)],
+                    [(5, 0), (4, 1)]]
+    moves = ai.allowed_moves(board, 'w')
+    return board, ground_truth, check_moves(moves, ground_truth)
