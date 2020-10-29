@@ -149,3 +149,18 @@ w_w_w_w_
                     [(5, 0), (4, 1)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_08_capture_black_simple():
+    board = convert_board(8, """
+________
+________
+________
+__b_____
+___w____
+________
+________
+________
+""")
+    ground_truth = [[(3, 2), (5, 4)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)
