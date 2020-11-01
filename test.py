@@ -179,3 +179,18 @@ ____w___
     ground_truth = [[(7, 4), (5, 6)], [(7, 4), (5, 2)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_10_capture_black_multiple():
+    board = convert_board(8, """
+_____b__
+____w___
+________
+__w___b_
+________
+__W_____
+________
+________
+""")
+    ground_truth = [[(0, 5), (2, 3), (4, 1), (6, 3)]]
+    moves = ai.allowed_moves(board, 'b')
+    return board, ground_truth, check_moves(moves, ground_truth)
