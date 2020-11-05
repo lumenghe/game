@@ -194,3 +194,18 @@ ________
     ground_truth = [[(0, 5), (2, 3), (4, 1), (6, 3)]]
     moves = ai.allowed_moves(board, 'b')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_11_capture_white_king():
+    board = convert_board(8, """
+_____W__
+____b_b_
+________
+__B___w_
+________
+__b_____
+________
+________
+""")
+    ground_truth = [[(0, 5), (2, 7)], [(0, 5), (2, 3), (4, 1), (6, 3)]]
+    moves = ai.allowed_moves(board, 'w')
+    return board, ground_truth, check_moves(moves, ground_truth)
