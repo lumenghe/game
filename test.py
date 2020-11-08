@@ -209,3 +209,18 @@ ________
     ground_truth = [[(0, 5), (2, 7)], [(0, 5), (2, 3), (4, 1), (6, 3)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_12_english_rules_no_backward():
+    board = convert_board(8, """
+________
+________
+___b_b__
+__w_____
+________
+________
+________
+________
+""")
+    ground_truth = [[(3, 2), (1, 4)]]
+    moves = ai.allowed_moves(board, 'w')
+    return board, ground_truth, check_moves(moves, ground_truth)
