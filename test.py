@@ -240,3 +240,18 @@ ________
                     [(0, 5), (1, 6)]]
     moves = ai.allowed_moves(board, 'w')
     return board, ground_truth, check_moves(moves, ground_truth)
+
+def test_14_capture_white_king_in_middle():
+    board = convert_board(8, """
+________
+____b_b_
+___w____
+________
+________
+________
+________
+________
+""")
+    ground_truth = [[(2, 3), (0, 5), (2, 7)]]
+    moves = ai.allowed_moves(board, 'w')
+    return board, ground_truth, check_moves(moves, ground_truth)
