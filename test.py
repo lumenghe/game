@@ -289,3 +289,21 @@ ____B___
 
 
 ###############################################################################
+
+if __name__ == "__main__":
+    def check_valid_position(test_name, board):
+        for row, line in enumerate(board):
+            for col, square in enumerate(line):
+                if (row + col) % 2 == 0:
+                    if square != '_':
+                        raise Exception("Ground truth for %s at row %d and column %d (starting at 0) is not valid, it should be '_' as it is a white square." % (test_name, row, col))
+    for test_name in dir():
+        if test_name.startswith("test_"):
+            print("Running '%s':" % test_name)
+            (board, ground_truth, ok) = eval("%s()" % test_name)
+            check_valid_position(test_name, board)
+            if not ok:
+                main.print_board(board)
+                break
+    if ok:
+        print("You are good to go ! You can try your script against the other side one with 'make'")
